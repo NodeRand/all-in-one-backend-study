@@ -19,8 +19,8 @@ public class UserController {
     // db 사용 전 코드 // private final List<User> users = new ArrayList<>();
     private final UserService userService;
 
-    public UserController(JdbcTemplate jdbcTemplate){
-        this.userService = new UserService(jdbcTemplate);
+    public UserController(UserService userService){
+        this.userService = userService;
     }
 
     @PostMapping("/user")

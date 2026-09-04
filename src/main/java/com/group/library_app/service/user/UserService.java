@@ -5,14 +5,15 @@ import com.group.library_app.dto.user.request.UserUpdateRequest;
 import com.group.library_app.dto.user.response.UserResponse;
 import com.group.library_app.repository.user.UserRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class UserService {
     private final UserRepository userRepository;
 
-    public UserService(JdbcTemplate jdbcTemplate){
-        userRepository = new UserRepository(jdbcTemplate);
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
     }
 
     // 얘는 @RequestBody가 필요 없음 -> 컨트롤러가 객체로 변환해준 걸 받기만 함 (UserController에 있던 함수의 역할 분리)
