@@ -6,7 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class BookController {
-    private final BookService bookService = new BookService();
+    private final BookService bookService;
+
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @PostMapping("/book")
     public void saveBook(){
         bookService.saveBook();
