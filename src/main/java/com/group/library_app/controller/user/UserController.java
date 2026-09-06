@@ -4,7 +4,9 @@ import com.group.library_app.domain.user.User;
 import com.group.library_app.dto.user.request.UserCreateRequest;
 import com.group.library_app.dto.user.request.UserUpdateRequest;
 import com.group.library_app.dto.user.response.UserResponse;
+import com.group.library_app.service.fruit.FruitService;
 import com.group.library_app.service.user.UserService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +20,11 @@ import java.util.List;
 public class UserController {
     // db 사용 전 코드 // private final List<User> users = new ArrayList<>();
     private final UserService userService;
+    private final FruitService fruitService;
 
-    public UserController(UserService userService){
+    public UserController(UserService userService, @Qualifier("appleService") FruitService fruitService){
         this.userService = userService;
+        this.fruitService = fruitService;
     }
 
     @PostMapping("/user")
