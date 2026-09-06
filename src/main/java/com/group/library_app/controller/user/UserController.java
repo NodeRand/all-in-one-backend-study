@@ -22,7 +22,7 @@ public class UserController {
     private final UserService userService;
     private final FruitService fruitService;
 
-    public UserController(UserService userService, @Qualifier("appleService") FruitService fruitService){
+    public UserController(UserService userService, @Qualifier("main") FruitService fruitService){
         this.userService = userService;
         this.fruitService = fruitService;
     }
