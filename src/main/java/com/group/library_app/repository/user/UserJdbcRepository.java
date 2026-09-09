@@ -2,14 +2,13 @@ package com.group.library_app.repository.user;
 
 import com.group.library_app.dto.user.response.UserResponse;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class UserRepository {
+public class UserJdbcRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public UserRepository(JdbcTemplate jdbcTemplate) {
+    public UserJdbcRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

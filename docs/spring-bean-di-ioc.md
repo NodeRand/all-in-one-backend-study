@@ -127,18 +127,18 @@ DTO/도메인 객체를 빈으로 만들면 A의 데이터가 B에게 보이는 
 ```java
 @RestController
 public class UserController {
-    private final UserService userService;
+    private final UserService userServiceV1;
 
     public UserController(JdbcTemplate jdbcTemplate){   // JdbcTemplate은 주입받지만
-        this.userService = new UserService(jdbcTemplate); // 서비스는 손으로 new
+        this.userServiceV1 = new UserService(jdbcTemplate); // 서비스는 손으로 new
     }
 }
 
 public class UserService {                              // @Service 없음 → 빈 아님
-    private final UserRepository userRepository;
+    private final UserRepository userJdbcRepository;
 
     public UserService(JdbcTemplate jdbcTemplate){       // 같은 형태인데 자동 주입 안 됨
-        userRepository = new UserRepository(jdbcTemplate); // 리포지토리도 손으로 new
+        userJdbcRepository = new UserRepository(jdbcTemplate); // 리포지토리도 손으로 new
     }
 }
 ```
@@ -163,17 +163,17 @@ public class UserRepository {
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
-    public UserService(UserRepository userRepository) {   // JdbcTemplate 말고 리포지토리를 받음
-        this.userRepository = userRepository;
+    private final UserRepository userJdbcRepository;
+    public UserService(UserRepository userJdbcRepository) {   // JdbcTemplate 말고 리포지토리를 받음
+        this.userJdbcRepository = userJdbcRepository;
     }
 }
 
 @RestController
 public class UserController {
-    private final UserService userService;
-    public UserController(UserService userService) {      // JdbcTemplate이 아예 안 보임
-        this.userService = userService;
+    private final UserService userServiceV1;
+    public UserController(UserService userServiceV1) {      // JdbcTemplate이 아예 안 보임
+        this.userServiceV1 = userServiceV1;
     }
 }
 ```
@@ -207,4 +207,4 @@ public static void main(String[] args) {
 }
 ```
 
-`userController`, `jdbcTemplate`, `dataSource`는 있고 `userService`는 없는 것을 눈으로 확인할 수 있다.
+`userController`, `jdbcTemplate`, `dataSource`는 있고 `userServiceV1`는 없는 것을 눈으로 확인할 수 있다.
