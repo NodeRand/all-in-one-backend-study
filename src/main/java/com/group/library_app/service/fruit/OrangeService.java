@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Primary
-public class OrangeService {
+public class OrangeService implements FruitService {
 }
