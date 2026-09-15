@@ -43,12 +43,13 @@ public class UserServiceV2 {
     // 질문: 우리 서비스 실무에서는 삭제도 id기준으로 찾는데 여기서는 왜 이름을 기준으로 찾는 건지?
     public void deleteUser(String name){
         // SELECT * FROM user WHERE name = ?;
-      User user = userRepository.findByName(name);
-      if(user == null){
-          throw new IllegalArgumentException();
-      }
+        User user = userRepository.findByName(name).orElseThrow(IllegalArgumentException::new);
 
-      // 위에서 검증을 끝냈으니 무조건 해당 user가 있다고 가정하고 삭제
-      userRepository.delete(user);
+//        if(!userRepository.existsByName(name)){
+//            throw new IllegalArgumentException();
+//        }
+//        // 위에서 검증을 끝냈으니 무조건 해당 user가 있다고 가정하고 삭제
+//        User user = userRepository.findByName(name);
+        userRepository.delete(user);
     }
 }
