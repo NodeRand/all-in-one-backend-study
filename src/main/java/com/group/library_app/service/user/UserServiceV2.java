@@ -3,6 +3,7 @@ package com.group.library_app.service.user;
 import com.group.library_app.domain.user.User;
 import com.group.library_app.domain.user.UserRepository;
 import com.group.library_app.dto.user.request.UserCreateRequest;
+import com.group.library_app.dto.user.request.UserUpdateRequest;
 import com.group.library_app.dto.user.response.UserResponse;
 import com.group.library_app.repository.user.UserJdbcRepository;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,16 @@ public class UserServiceV2 {
     public List<UserResponse> getUsers(){
         List<User> users = userRepository.findAll();
         // stream()과 map과 collect의 기능? 자바 개념 이슈
-        return users.stream().map(user -> new UserResponse(user.getId(), user.getName(), user.getAge())).collect(Collectors.toList());
+        // return users.stream().map(user -> new UserResponse(user.getId(), user.getName(), user.getAge())).collect(Collectors.toList());
+        // UserResponse::new의 문법
+        return users.stream().map(UserResponse::new).collect(Collectors.toList());
+    }
+
+    public void updateUser(UserUpdateRequest request){
+        // SELECT * FROM user WHERE id = ?;
+        // Optional<User> -> 이게 뭐지
+        User user = userRepository.findById(request.getId()).orElseThrow(IllegalArgumentException::new);
+        user.updateName(request.getName());
+        userRepository.save(user);
     }
 }
