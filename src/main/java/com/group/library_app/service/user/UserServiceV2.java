@@ -41,10 +41,10 @@ public class UserServiceV2 {
     @Transactional
     public void updateUser(UserUpdateRequest request){
         // SELECT * FROM user WHERE id = ?;
-        // Optional<User> -> 이게 뭐지
+        // Optional<User>는 "User 객체가 들어있을 수도 있고, 비어있을(null) 수도 있는 상자"
         User user = userRepository.findById(request.getId()).orElseThrow(IllegalArgumentException::new);
         user.updateName(request.getName());
-        userRepository.save(user);
+        // userRepository.save(user); -> 영속성 컨텍스트(@Transactional로 발동)로 인해 필요없는 코드가 됨
     }
     @Transactional
     // 질문: 우리 서비스 실무에서는 삭제도 id기준으로 찾는데 여기서는 왜 이름을 기준으로 찾는 건지?
