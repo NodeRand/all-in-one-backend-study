@@ -23,7 +23,7 @@ public class UserServiceV2 {
     // 아래 있는 함수가 시작될 때 start transaction;을 해준다 (트랜잭션을 시작!)
     // 함수가 예외 없이 잘 끝났다면 commit
     // 혹시라도 문제가 있다면 rollback
-    // @Transactional // org.springframework꺼로 사용 (jakarta꺼 x)
+    @Transactional // org.springframework꺼로 사용 (jakarta꺼 x)
     public void saveUser(UserCreateRequest request){
         // save: JpaRepository의 메소드
         userRepository.save(new User(request.getName(),request.getAge()));
