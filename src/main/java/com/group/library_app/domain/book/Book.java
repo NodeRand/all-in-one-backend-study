@@ -12,7 +12,8 @@ public class Book {
     @Column(nullable = false, length = 255)
     private String name;
 
-    // 질문: JPA를 위한 기본 생성자..protected를 왜 걸어주더라
+    // JPA 기본 생성자. protected인 이유(리플렉션 생성 · 프록시 상속 · 오용 방지)
+    // → docs/jpa-protected-no-arg-constructor.md
     protected Book() {}
 
     public Book(String name) {
