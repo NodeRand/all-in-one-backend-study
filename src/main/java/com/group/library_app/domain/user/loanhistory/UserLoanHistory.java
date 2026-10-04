@@ -11,7 +11,9 @@ public class UserLoanHistory {
 
     // 한 명의 User한테 대출기록은 여러 개
     @ManyToOne
+    @JoinColumn(nullable = false)
     private User user;
+
 
     private String bookName;
 

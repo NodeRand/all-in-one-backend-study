@@ -21,8 +21,12 @@ public class User {
     // user와의 1:N
     // user와의 관계에서 userLoanHistory가 연관관계의 주인
     // 질문: 테이블간 인덱스를 누가 갖고있느냐에 따라 주인이 되는 것인가? 근데 양방향 인덱스는 또 어떻게하는 지,
-    // 주로 삭제 이슈에서 터지는 걸로 알고 있음. user가 지워지면 userLoanHistory들은?
-    @OneToMany(mappedBy = "user")
+    //  주로 삭제 이슈에서 터지는 걸로 알고 있음. user가 지워지면 userLoanHistory들은?
+    // 다음 단원에서 확인된 답변: N:1의 연관관계에서는 user쪽에서
+    //  아래의 어노테이션+userLoanHistory코드 자체를 안 씀으로서 단방향으로만 설정이 가능
+    //  cascade: 하나 지울 때 관련 기록 지우기에 대한 답변
+    //  orpanRemoval: 엔티티에서 지운걸 실제 DB에 반영하기 위함
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserLoanHistory> userLoanHistories = new ArrayList<>();
 
     protected User(){}
