@@ -51,9 +51,9 @@ public class BookService {
 
         //4. 유저 정보를 가져온다.
         User user = userRepository.findByName(request.getUserName()).orElseThrow(IllegalArgumentException::new);
-
-        //5. 유저 정보와 책 정보를 기반으로 UserLoanHistory를 저장
-        userLoanHistoryRepository.save(new UserLoanHistory(user, book.getName()));
+        user.loanBook(book.getName());
+//        //5. 유저 정보와 책 정보를 기반으로 UserLoanHistory를 저장
+//        userLoanHistoryRepository.save(new UserLoanHistory(user, book.getName()));
     }
 
     @Transactional
@@ -61,12 +61,16 @@ public class BookService {
         // name 받은걸로 db에서 유저 찾기
         User user = userRepository.findByName(request.getUserName()).orElseThrow(IllegalArgumentException::new);
 
-        // Optional<T> 열기 · orElseThrow가 좌변 타입을 T로 바꾸는 이유
-        // → docs/optional-and-method-reference.md
-        UserLoanHistory history = userLoanHistoryRepository.findByUserIdAndBookName(user.getId(), request.getBookName()).orElseThrow(IllegalArgumentException::new);
-        history.doReturn();
-        // userLoanHistoryRepository.save(history);가 필요 없는 이유?
-        // => 이미 Transactional을 통해 user와 history는 영속성 컨텍스트로서 해당 엔티티객체와 디비객체가 연동, 자동 감지 업데이트가 진행됨
+//        // Optional<T> 열기 · orElseThrow가 좌변 타입을 T로 바꾸는 이유
+//        // → docs/optional-and-method-reference.md
+//        UserLoanHistory history = userLoanHistoryRepository.findByUserIdAndBookName(user.getId(), request.getBookName()).orElseThrow(IllegalArgumentException::new);
+//        history.doReturn();
+//        // userLoanHistoryRepository.save(history);가 필요 없는 이유?
+//        // => 이미 Transactional을 통해 user와 history는 영속성 컨텍스트로서 해당 엔티티객체와 디비객체가 연동, 자동 감지 업데이트가 진행됨
+
+        // BookService에서 UserLoanHistory를 참고할 일이 없도록ㅇㅇ
+        System.out.println("Hello");
+        user.returnBook(request.getBookName());
     }
 }
 

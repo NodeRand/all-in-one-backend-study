@@ -53,4 +53,23 @@ public class User {
     public void updateName(String name){
         this.name = name;
     }
+    public void loanBook(String bookName){
+        // cmd+p : 함수에 필요한 인자 설명 단축키
+        this.userLoanHistories.add(new UserLoanHistory(this, bookName));
+    }
+
+    public void returnBook(String bookName){
+        // 질문: stream이 뭐였더라 자바 문법 기본기 이슈
+        UserLoanHistory targetHistory = this.userLoanHistories.stream()
+                .filter(history->history.getBookName().equals(bookName))
+                // 같은 책을 빌림→반납→재대출하면 같은 bookName 기록이 여러 개 쌓임 (예: 반납된 id 2, 대출 중 id 23)
+                // 이름만으로 findFirst()하면 앞쪽의 이미 반납된 기록이 잡혀 doReturn()이 true→true로 아무 변화 없이 끝나고,
+                // 예외도 없어서 "반납 완료"로 응답하지만 실제 대출 중인 기록은 영원히 0으로 남음
+                // loanBook에서 미반납 중복 대출을 막으므로 "이 책 + 미반납" 기록은 최대 1개 → 이 필터로 정확히 그 하나만 남김
+                // (순서에 기대서 마지막 기록을 고르는 방식은 JPA가 List 순서를 보장하지 않아 위험)
+                .filter(history->!history.isReturn())
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+        targetHistory.doReturn();
+    }
 }
