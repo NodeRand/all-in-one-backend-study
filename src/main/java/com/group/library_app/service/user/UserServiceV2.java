@@ -27,7 +27,6 @@ public class UserServiceV2 {
     public void saveUser(UserCreateRequest request){
         // save: JpaRepository의 메소드
         userRepository.save(new User(request.getName(),request.getAge()));
-        throw new IllegalArgumentException();
     }
     @Transactional(readOnly = true) // readOnly=true -> 약간의 성능적 이점
     public List<UserResponse> getUsers(){
