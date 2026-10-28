@@ -2,11 +2,17 @@ package com.group.library_app.domain.user;
 
 import com.group.library_app.domain.user.loanhistory.UserLoanHistory;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+// protected 생성자를 만들고 싶다면 아래와 같이 (access = AccessLevel.PROTECTED) 추가
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +35,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserLoanHistory> userLoanHistories = new ArrayList<>();
 
-    protected User(){}
+//    protected User(){}
 
     public User(String name, Integer age) {
         if(name == null || name.isBlank())
@@ -38,17 +44,17 @@ public class User {
         this.age = age;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public Integer getAge() {
+//        return age;
+//    }
 
     public void updateName(String name){
         this.name = name;

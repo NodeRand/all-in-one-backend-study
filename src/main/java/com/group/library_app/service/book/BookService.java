@@ -9,12 +9,14 @@ import com.group.library_app.domain.user.loanhistory.UserLoanHistoryRepository;
 import com.group.library_app.dto.book.request.BookCreateRequest;
 import com.group.library_app.dto.book.request.BookLoanRequest;
 import com.group.library_app.dto.book.request.BookReturnRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class BookService {
     // private final BookMemoryRepository bookRepository = new BookMemoryRepository();
     // private final BookRepository bookRepository = new BookMemoryRepository();
@@ -23,13 +25,14 @@ public class BookService {
     private final UserLoanHistoryRepository userLoanHistoryRepository;
     private final UserRepository userRepository;
 
-    public BookService(BookRepository bookRepository,
-                       UserLoanHistoryRepository userLoanHistoryRepository,
-                       UserRepository userRepository) {
-        this.bookRepository = bookRepository;
-        this.userLoanHistoryRepository = userLoanHistoryRepository;
-        this.userRepository = userRepository;
-    }
+    // @RequiredArgsConstructor로 대체되는 코드들 (어노테이션을 통한 자동주입)
+//    public BookService(BookRepository bookRepository,
+//                       UserLoanHistoryRepository userLoanHistoryRepository,
+//                       UserRepository userRepository) {
+//        this.bookRepository = bookRepository;
+//        this.userLoanHistoryRepository = userLoanHistoryRepository;
+//        this.userRepository = userRepository;
+//    }
 
     @Transactional
     public void saveBook(BookCreateRequest request){
